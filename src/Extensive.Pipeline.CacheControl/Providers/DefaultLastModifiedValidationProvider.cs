@@ -4,15 +4,15 @@ using System.Text;
 
 namespace Extensive.Pipeline.CacheControl.Providers
 {
-    public class DefaultLastModifiedValidationProvider : IValidationProvider
+    public class DefaultLastModifiedValidationProvider : ILastModifiedValidationProvider
     {
         public bool IsValid(
-            NormalizedHeader[] eTags, 
+            DateTimeOffset[] lastModifiedDates, 
             CacheControlResponse key)
         {
-            if (eTags == null) throw new ArgumentNullException(nameof(eTags));
+            if (lastModifiedDates == null) throw new ArgumentNullException(nameof(lastModifiedDates));
             if (key == null) throw new ArgumentNullException(nameof(key));
-            if (eTags.Length == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(eTags));
+            if (lastModifiedDates.Length == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(lastModifiedDates));
             
             //TODO:validate
             return true;
