@@ -7,6 +7,9 @@ namespace Extensive.Pipeline.CacheControl.Providers
 {
     public interface IValidationProvider
     {
-        bool IsValid([NotNull] NormalizedHeader[] eTags, [NotNull] CacheControlResponse key);
+        [Pure]
+        bool IsValid(
+            [NotNull] NormalizedHeader[] eTags, 
+            [NotNull] CacheControlResponse key);
     }
 }

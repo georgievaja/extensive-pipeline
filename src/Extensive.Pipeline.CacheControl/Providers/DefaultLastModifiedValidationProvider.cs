@@ -6,7 +6,9 @@ namespace Extensive.Pipeline.CacheControl.Providers
 {
     public class DefaultLastModifiedValidationProvider : IValidationProvider
     {
-        public bool IsValid(NormalizedHeader[] eTags, CacheControlResponse key)
+        public bool IsValid(
+            NormalizedHeader[] eTags, 
+            CacheControlResponse key)
         {
             if (eTags == null) throw new ArgumentNullException(nameof(eTags));
             if (key == null) throw new ArgumentNullException(nameof(key));
