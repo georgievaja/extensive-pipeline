@@ -8,17 +8,13 @@ using Microsoft.Extensions.Logging;
 namespace Extensive.Pipeline.CacheControl.Sample.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/teams")]
+    public class TeamsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly ILogger<TeamsController> _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public TeamsController(ILogger<TeamsController> logger)
         {
             _logger = logger;
         }
