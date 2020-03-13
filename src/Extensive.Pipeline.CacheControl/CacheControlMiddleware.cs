@@ -24,12 +24,20 @@ namespace Extensive.Pipeline.CacheControl
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var key = new CacheControlKeyBuilder()
+            //TODO: check request directives - max-age, max-stale, min-fresh, no-cache, no-store, no-transform, only-if-cached
+            //TODO: check response directives from attribute - must-revalidate, no-cache, no-store, no-transform, public, private, proxy-revalidate, max-age, s-maxage
+            
+            // if cache control validation needed, create cache control key
+            var baseKey = new CacheControlKeyBuilder()
                 .WithMethod(context.Request.Method)
                 .WithScheme(context.Request.Scheme)
+                .WithHost(context.Request.Host.Value)
+                .WithPathBase(context.Request.PathBase.Value)
+                .WithPath(context.Request.Path.Value)
                 .Build();
 
-            var va = await cacheStore.GetCacheControlResponseAsync(key);
+            // try get cache control response
+            var va = await cacheStore.GetCacheControlResponseAsync(baseKey);
 
             await next.Invoke(context);
         }

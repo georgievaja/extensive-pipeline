@@ -9,23 +9,25 @@ namespace Extensive.Pipeline.CacheControl
     public class CacheControlKeyBuilder
     {
         private string key;
-        private string host;
-        private string pathBase;
-        private string path;
         private string[] varyHeaders;
         private string[] varyQueries;
+
+        public CacheControlKeyBuilder()
+        {
+            key = "CC.KEY:";
+        }
 
         /// <summary>
         /// Adds method key
         /// </summary>
-        /// <param name="m">HTTP method</param>
+        /// <param name="method">HTTP method</param>
         public CacheControlKeyBuilder WithMethod(
-            [NotNull] string m)
+            [NotNull] string method)
         {
-            if (m is null) throw new ArgumentNullException(nameof(m));
+            if (method is null) throw new ArgumentNullException(nameof(method));
 
-            var methodKey = m.ToUpperInvariant();
-            this.key = $"{this.key}.M{methodKey}";
+            var methodKey = method.ToUpperInvariant();
+            this.key = $"{this.key}.M:{methodKey}";
 
             return this;
         }
@@ -35,12 +37,57 @@ namespace Extensive.Pipeline.CacheControl
         /// </summary>
         /// <param name="m">HTTP scheme</param>
         public CacheControlKeyBuilder WithScheme(
-            [NotNull] string s)
+            [NotNull] string scheme)
         {
-            if (s is null) throw new ArgumentNullException(nameof(s));
+            if (scheme is null) throw new ArgumentNullException(nameof(scheme));
 
-            var schemeKey = s.ToUpperInvariant();
-            this.key = $"{this.key}.S{schemeKey}";
+            var schemeKey = scheme.ToUpperInvariant();
+            this.key = $"{this.key}.S:{schemeKey}";
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds host key
+        /// </summary>
+        /// <param name="host">HTTP host</param>
+        public CacheControlKeyBuilder WithHost(
+            [NotNull] string host)
+        {
+            if (host is null) throw new ArgumentNullException(nameof(host));
+
+            var hostKey = host.ToUpperInvariant();
+            this.key = $"{this.key}.H:{hostKey}";
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds base path
+        /// </summary>
+        /// <param name="pathBase">HTTP base path</param>
+        public CacheControlKeyBuilder WithPathBase(
+            [NotNull] string pathBase)
+        {
+            if (pathBase is null) throw new ArgumentNullException(nameof(pathBase));
+
+            var pathBaseKey = pathBase.ToUpperInvariant();
+            this.key = $"{this.key}.PB:{pathBaseKey}";
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds path
+        /// </summary>
+        /// <param name="path">HTTP base path</param>
+        public CacheControlKeyBuilder WithPath(
+            [NotNull] string path)
+        {
+            if (path is null) throw new ArgumentNullException(nameof(path));
+
+            var pathKey = path.ToUpperInvariant();
+            this.key = $"{this.key}.P:{pathKey}";
 
             return this;
         }
