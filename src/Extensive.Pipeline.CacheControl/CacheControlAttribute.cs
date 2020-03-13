@@ -14,10 +14,8 @@ namespace Extensive.Pipeline.CacheControl
         public CacheControlAttribute()
         {
             CacheabilityType = CacheabilityType.Public;
-            MaxAge = TimeSpan.FromSeconds(1);
         }
 
         public CacheabilityType CacheabilityType { get; set; }
-        public TimeSpan MaxAge { get; set; }
     }
 }
