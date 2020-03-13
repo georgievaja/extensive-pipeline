@@ -13,9 +13,9 @@ namespace Extensive.Pipeline.CacheControl.Stores
             return Task.FromResult(new CacheControlResponse(DateTimeOffset.UtcNow, new NormalizedHeader("test"), DateTimeOffset.MinValue));
         }
 
+        //TODO: this can probably be decorating infrastructure layer, where the key provider is injected
         public Task SetCacheControlResponseAsync(CacheControlKey key, CacheControlResponse response)
         {
-            //TODO: setting to mem cache
             return Task.CompletedTask;
         }
     }

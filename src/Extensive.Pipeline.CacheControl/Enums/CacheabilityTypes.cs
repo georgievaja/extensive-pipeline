@@ -5,7 +5,7 @@ using System.Text;
 namespace Extensive.Pipeline.CacheControl.Enums
 {
     /// <summary>
-    /// Cache control directives - cacheability type
+    /// Cache control directives - cacheability types
     /// </summary>
     public enum CacheabilityType
     {

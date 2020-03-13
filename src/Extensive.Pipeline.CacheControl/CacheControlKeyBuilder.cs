@@ -9,8 +9,6 @@ namespace Extensive.Pipeline.CacheControl
     public class CacheControlKeyBuilder
     {
         private string key;
-        private string[] varyHeaders;
-        private string[] varyQueries;
 
         public CacheControlKeyBuilder()
         {

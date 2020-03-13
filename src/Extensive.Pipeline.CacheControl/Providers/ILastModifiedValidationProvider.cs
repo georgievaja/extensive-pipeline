@@ -9,7 +9,7 @@ namespace Extensive.Pipeline.CacheControl.Providers
     {
         [Pure]
         bool IsValid(
-            [NotNull] DateTimeOffset[] lastModifiedDates,
+            [NotNull] DateTimeOffset lastModifiedDate,
             [NotNull] CacheControlResponse key);
     }
 }

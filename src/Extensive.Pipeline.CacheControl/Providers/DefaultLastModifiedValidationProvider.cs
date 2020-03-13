@@ -7,15 +7,13 @@ namespace Extensive.Pipeline.CacheControl.Providers
     public class DefaultLastModifiedValidationProvider : ILastModifiedValidationProvider
     {
         public bool IsValid(
-            DateTimeOffset[] lastModifiedDates, 
+            DateTimeOffset lastModifiedDate, 
             CacheControlResponse key)
         {
-            if (lastModifiedDates == null) throw new ArgumentNullException(nameof(lastModifiedDates));
+            if (lastModifiedDate == null) throw new ArgumentNullException(nameof(lastModifiedDate));
             if (key == null) throw new ArgumentNullException(nameof(key));
-            if (lastModifiedDates.Length == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(lastModifiedDates));
             
-            //TODO:validate
-            return true;
+            return key.LastModified.Equals(lastModifiedDate);
         }
     }
 }
