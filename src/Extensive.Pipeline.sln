@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{247C86ED-D5F3-4711-B03C-ADF353D1E447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensive.Pipeline.CacheControl", "Extensive.Pipeline.CacheControl\Extensive.Pipeline.CacheControl.csproj", "{638740DC-8A4D-41F6-B4A6-DFD62A0CBB41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensive.Pipeline.CacheControl", "Extensive.Pipeline.CacheControl\Extensive.Pipeline.CacheControl.csproj", "{638740DC-8A4D-41F6-B4A6-DFD62A0CBB41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensive.Pipeline.CacheControl.Test", "Extensive.Pipeline.CacheControl.Test\Extensive.Pipeline.CacheControl.Test.csproj", "{153BD0C6-E481-4D4C-94AF-84537162CB4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensive.Pipeline.CacheControl.Test", "Extensive.Pipeline.CacheControl.Test\Extensive.Pipeline.CacheControl.Test.csproj", "{153BD0C6-E481-4D4C-94AF-84537162CB4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensive.Pipeline.CacheControl.Sample", "Extensive.Pipeline.CacheControl.Sample\Extensive.Pipeline.CacheControl.Sample.csproj", "{66008487-27E4-46F0-A9B6-3966357EAC9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensive.Pipeline.CacheControl.Sample", "Extensive.Pipeline.CacheControl.Sample\Extensive.Pipeline.CacheControl.Sample.csproj", "{66008487-27E4-46F0-A9B6-3966357EAC9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensive.Pipeline.CacheControl.Pure", "Extensive.Pipeline.CacheControl.Pure\Extensive.Pipeline.CacheControl.Pure.csproj", "{AFDE314A-7A81-46B4-B5F2-CBAEAEB1D6FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{66008487-27E4-46F0-A9B6-3966357EAC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66008487-27E4-46F0-A9B6-3966357EAC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66008487-27E4-46F0-A9B6-3966357EAC9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFDE314A-7A81-46B4-B5F2-CBAEAEB1D6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFDE314A-7A81-46B4-B5F2-CBAEAEB1D6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFDE314A-7A81-46B4-B5F2-CBAEAEB1D6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFDE314A-7A81-46B4-B5F2-CBAEAEB1D6FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

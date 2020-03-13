@@ -18,6 +18,7 @@ namespace Extensive.Pipeline.CacheControl.Sample
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
             services.AddCacheControl();
             services.AddControllers();
             services.AddApiVersioning(options =>

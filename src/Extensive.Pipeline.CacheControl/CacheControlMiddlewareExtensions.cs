@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Stores;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -24,7 +22,7 @@ namespace Extensive.Pipeline.CacheControl
 
             services.TryAdd(ServiceDescriptor.Transient<IETagValidationProvider, DefaultETagValidationProvider>());
             services.TryAdd(ServiceDescriptor.Transient<ILastModifiedValidationProvider, DefaultLastModifiedValidationProvider>());
-            services.TryAdd(ServiceDescriptor.Transient<ICacheStore, DefaultInMemoryCacheStore>());
+            services.TryAdd(ServiceDescriptor.Transient<ICacheControlStore, CacheControlStore>());
 
             return services;
         }

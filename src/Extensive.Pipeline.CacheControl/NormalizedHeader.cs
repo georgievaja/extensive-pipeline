@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Extensive.Pipeline.CacheControl
+﻿namespace Extensive.Pipeline.CacheControl
 {
     public struct NormalizedHeader
     {
