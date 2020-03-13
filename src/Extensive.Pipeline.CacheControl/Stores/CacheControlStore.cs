@@ -36,7 +36,8 @@ namespace Extensive.Pipeline.CacheControl.Stores
             if (key == null) throw new ArgumentNullException(nameof(key));
             if (response == null) throw new ArgumentNullException(nameof(response));
 
-            return distributedCache.SetStringAsync(key.Key, JsonSerializer.Serialize(response));
+            var str = JsonSerializer.Serialize(response);
+            return distributedCache.SetStringAsync(key.Key, str);
         }
     }
 }

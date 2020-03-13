@@ -4,9 +4,10 @@ namespace Extensive.Pipeline.CacheControl
 {
     public class CacheControlResponse
     {
+        public CacheControlResponse() { }
         public CacheControlResponse(
             DateTimeOffset created,
-            NormalizedHeader eTag,
+            string eTag,
             DateTimeOffset lastModified)
         {
             Created = created;
@@ -14,8 +15,8 @@ namespace Extensive.Pipeline.CacheControl
             LastModified = lastModified;
         }
 
-        public DateTimeOffset Created { get; }
-        public NormalizedHeader ETag { get; }
-        public DateTimeOffset LastModified { get; }
+        public DateTimeOffset Created { get; set; }
+        public string ETag { get; set;  }
+        public DateTimeOffset LastModified { get; set; }
     }
 }

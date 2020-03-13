@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Resources
 {
-    public class TeamResourceV1
+    public class TeamRequestV1
     {
-        /// <summary>
-        /// Team id
-        /// </summary>
-        [Required]
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Team name
         /// </summary>

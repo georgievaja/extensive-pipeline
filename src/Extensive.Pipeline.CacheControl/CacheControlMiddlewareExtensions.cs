@@ -23,6 +23,7 @@ namespace Extensive.Pipeline.CacheControl
             services.TryAdd(ServiceDescriptor.Transient<IETagValidationProvider, DefaultETagValidationProvider>());
             services.TryAdd(ServiceDescriptor.Transient<ILastModifiedValidationProvider, DefaultLastModifiedValidationProvider>());
             services.TryAdd(ServiceDescriptor.Transient<ICacheControlStore, CacheControlStore>());
+            services.TryAdd(ServiceDescriptor.Transient<ICacheControlKeyProvider, DefaultCacheControlKeyProvider>());
 
             return services;
         }

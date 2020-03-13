@@ -1,3 +1,4 @@
+using Extensive.Pipeline.CacheControl.Sample.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ namespace Extensive.Pipeline.CacheControl.Sample
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
             services.AddCacheControl();
             services.AddControllers();
@@ -33,6 +35,7 @@ namespace Extensive.Pipeline.CacheControl.Sample
             });
 
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddStores();
             services.AddSwaggerGen();
         }
 
