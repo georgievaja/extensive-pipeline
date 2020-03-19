@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Net.Http;
 
 namespace Extensive.Pipeline.CacheControl.Sample
 {
@@ -46,7 +47,7 @@ namespace Extensive.Pipeline.CacheControl.Sample
             app.UseAuthorization();
             app.UseCacheControl(builder =>
             {
-                builder.WithSupportedMethods(new[] { "GET" });
+                builder.WithSupportedMethods(new[] { HttpMethod.Get });
             });
 
             app.UseSwagger();

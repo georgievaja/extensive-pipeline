@@ -28,6 +28,6 @@ namespace Extensive.Pipeline.CacheControl.Enums
         /// <summary>
         /// The cache should not store anything about the client request or server response.
         /// </summary>
-        NoStore
+        NoStore,
     }
 }

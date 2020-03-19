@@ -6,17 +6,29 @@ namespace Extensive.Pipeline.CacheControl
     {
         public CacheControlResponse() { }
         public CacheControlResponse(
-            DateTimeOffset created,
             string eTag,
-            DateTimeOffset lastModified)
+            DateTimeOffset lastModified,
+            int maxAge)
         {
-            Created = created;
             ETag = eTag;
             LastModified = lastModified;
+            MaxAge = maxAge;
         }
-
-        public DateTimeOffset Created { get; set; }
+        
+        /// <summary>
+        /// Strong resource validator - Entity Tag
+        /// </summary>
         public string ETag { get; set;  }
+        
+        /// <summary>
+        /// Weak resource validator - Last Modified
+        /// </summary>
         public DateTimeOffset LastModified { get; set; }
+
+        /// <summary>
+        /// Maximum amount of time a resource will be considered fresh.
+        /// Relative to the time of the request (in seconds).
+        /// </summary>
+        public int MaxAge { get; set; }
     }
 }

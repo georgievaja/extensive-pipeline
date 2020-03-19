@@ -10,13 +10,14 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/teams")]
-    [CacheControl(CacheabilityType = CacheabilityType.Public)]
+    [CacheControl(CacheabilityType.Public, "additional-header")]
     public class TeamsController : ControllerBase
     {
         private readonly ITeamsStore teamsStore;

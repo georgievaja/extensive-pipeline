@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Stores;
@@ -29,19 +30,30 @@ namespace Extensive.Pipeline.CacheControl
 
         public Task InvokeAsync(HttpContext context)
         {
-            return !cacheControl.SupportedMethods.Contains(context.Request.Method) ? 
+            return !cacheControl.SupportedMethods.Contains(new HttpMethod(context.Request.Method)) ? 
                 next.Invoke(context) : 
                 ControlCache(context);
         }
 
         private async Task ControlCache(HttpContext context)
         {
-            //TODO: check request directives - max-age, max-stale, min-fresh, no-cache, no-store, no-transform, only-if-cached
-            //TODO: check response directives from attribute - must-revalidate, no-cache, no-store, no-transform, public, private, proxy-revalidate, max-age, s-maxage
+            // Check validation headers:
+            /*
+               | If-Match            | http     | standard | P 1 |
+               | If-Modified-Since   | http     | standard | P 4 |
+               | If-None-Match       | http     | standard | P 3 |
+               | If-Unmodified-Since | http     | standard | P 2 |
+               | ETag
+               | Last-Modified  
+             */
 
+            // NOT SUPPORTED IN PHASE 1: Check request directives in Cache-control headers (not supported yet, no-cache, no-store, no-transform, only-if-cached, max-age, max-stale, min-fresh)
+            
+            // Add response directives from attribute - must-revalidate, no-cache, no-store, no-transform, public, private, proxy-revalidate, max-age, s-maxage
+            // Add validation directives if they exist - etag, last-modified
+            // Add vary headers
             var baseKey = cacheControlKeyProvider.GetCacheControlKey();
             var va = await cacheStore.TryGetCacheControlResponseAsync(baseKey);
-
 
             await next.Invoke(context);
         }

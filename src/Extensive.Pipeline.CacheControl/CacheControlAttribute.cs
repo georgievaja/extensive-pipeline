@@ -9,11 +9,28 @@ namespace Extensive.Pipeline.CacheControl
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class CacheControlAttribute : Attribute
     {
-        public CacheControlAttribute()
+        public CacheControlAttribute(
+            CacheabilityType type)
         {
-            CacheabilityType = CacheabilityType.Public;
+            CacheabilityType = type;
         }
 
-        public CacheabilityType CacheabilityType { get; set; }
+        public CacheControlAttribute(
+            [NotNull, ItemNotNull] params string[] additionalVaryHeaders)
+        {
+            AdditionalVaryHeaders = additionalVaryHeaders ?? throw new ArgumentNullException(nameof(additionalVaryHeaders));
+        }
+
+        public CacheControlAttribute(
+            CacheabilityType type, 
+            [NotNull, ItemNotNull] params string[] additionalVaryHeaders)
+        {
+            AdditionalVaryHeaders = additionalVaryHeaders ??  throw new ArgumentNullException(nameof(additionalVaryHeaders));
+            CacheabilityType = type;
+        }
+
+        public CacheabilityType CacheabilityType { get; }
+
+        public string[] AdditionalVaryHeaders { get; }
     }
 }
