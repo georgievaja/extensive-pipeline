@@ -30,7 +30,7 @@ namespace Extensive.Pipeline.CacheControl
         /// <summary>
         /// Adds scheme key
         /// </summary>
-        /// <param name="m">HTTP scheme</param>
+        /// <param name="scheme">HTTP scheme</param>
         public CacheControlKeyBuilder WithScheme(
             [NotNull] string scheme)
         {

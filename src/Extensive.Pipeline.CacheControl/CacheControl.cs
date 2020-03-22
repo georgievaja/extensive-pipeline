@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using Extensive.Pipeline.CacheControl.Enums;
+using Extensive.Pipeline.CacheControl.Pure.Enums;
 using JetBrains.Annotations;
 
 namespace Extensive.Pipeline.CacheControl
@@ -11,8 +11,7 @@ namespace Extensive.Pipeline.CacheControl
     {
         public CacheControl(
             [NotNull, ItemNotNull] HttpMethod[] supportedMethods,
-            [NotNull, ItemNotNull] string[] defaultVaryHeaders,
-            CacheabilityType cacheabilityType)
+            [NotNull, ItemNotNull] string[] defaultVaryHeaders)
         {
             if (supportedMethods == null) throw new ArgumentNullException(nameof(supportedMethods));
             if (defaultVaryHeaders == null) throw new ArgumentNullException(nameof(defaultVaryHeaders));
@@ -24,11 +23,9 @@ namespace Extensive.Pipeline.CacheControl
 
             SupportedMethods = supportedMethods;
             DefaultVaryHeaders = defaultVaryHeaders;
-            DefaultCacheabilityType = cacheabilityType;
         }
 
         public HttpMethod[] SupportedMethods { get; }
         public string[] DefaultVaryHeaders { get; }
-        public CacheabilityType DefaultCacheabilityType { get; }
     }
 }

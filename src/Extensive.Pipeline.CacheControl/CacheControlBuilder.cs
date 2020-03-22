@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using Extensive.Pipeline.CacheControl.Enums;
+using Extensive.Pipeline.CacheControl.Pure.Enums;
 using JetBrains.Annotations;
 using Microsoft.Net.Http.Headers;
 
@@ -20,7 +20,6 @@ namespace Extensive.Pipeline.CacheControl
             HeaderNames.ContentLanguage, 
             HeaderNames.ContentType };
 
-        private CacheabilityType defaultType = CacheabilityType.Public;
 
         /// <summary>
         /// Adds supported methods
@@ -54,24 +53,11 @@ namespace Extensive.Pipeline.CacheControl
             return this;
         }
 
-        /// <summary>
-        /// Adds default cache control directive type
-        /// </summary>
-        /// <param name="type">Cache control directive type</param>
-        public CacheControlBuilder WithDefaultCacheabilityType(
-            CacheabilityType type)
-        {
-            this.defaultType = type;
-
-            return this;
-        }
-
         public CacheControl Build()
         {
             return new CacheControl(
                 this.supportedMethods, 
-                this.defaultVaryHeaders, 
-                this.defaultType);
+                this.defaultVaryHeaders);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Stores;
+using Extensive.Pipeline.CacheControl.Validators;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Extensive.Pipeline.CacheControl
@@ -19,11 +20,14 @@ namespace Extensive.Pipeline.CacheControl
             [NotNull] this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
+            var baseValidator = new SuccessorValidator();
+            baseValidator
+                .SetNext(new IfNoneMatchValidator())
+                .SetNext(new IfModifiedSinceValidator());
 
-            services.TryAdd(ServiceDescriptor.Transient<IETagValidationProvider, DefaultETagValidationProvider>());
-            services.TryAdd(ServiceDescriptor.Transient<ILastModifiedValidationProvider, DefaultLastModifiedValidationProvider>());
+            services.TryAdd(ServiceDescriptor.Transient<IValidator>(sp => baseValidator));
             services.TryAdd(ServiceDescriptor.Transient<ICacheControlStore, CacheControlStore>());
-            services.TryAdd(ServiceDescriptor.Transient<ICacheControlKeyProvider, DefaultCacheControlKeyProvider>());
+            services.TryAdd(ServiceDescriptor.Transient<ICacheControlKeyProvider, MockCacheControlKeyProvider>());
 
             return services;
         }
