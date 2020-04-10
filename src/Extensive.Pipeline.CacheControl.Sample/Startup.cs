@@ -44,10 +44,10 @@ namespace Extensive.Pipeline.CacheControl.Sample
         {
             app.UseRouting();
             app.UseAuthorization();
-            app.UseCacheControl(builder =>
-            {
-                builder.WithSupportedMethods(new[] { HttpMethod.Get, HttpMethod.Head });
-            });
+            //app.UseCacheControl(builder =>
+            //{
+            //    builder.WithSupportedMethods(new[] { HttpMethod.Get, HttpMethod.Head });
+            //});
 
             app.UseSwagger();
             app.UseSwaggerUI(
