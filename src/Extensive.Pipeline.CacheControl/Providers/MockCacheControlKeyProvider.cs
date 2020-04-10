@@ -11,5 +11,10 @@ namespace Extensive.Pipeline.CacheControl.Providers
         {
             return new CacheControlKey("teams.resource");
         }
+
+        public CacheControlKey GetCacheControlKey(string[] varyHeaders)
+        {
+            return new CacheControlKey("teams.resource");
+        }
     }
 }

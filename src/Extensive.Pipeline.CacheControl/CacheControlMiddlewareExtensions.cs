@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Extensive.Pipeline.CacheControl.Handlers;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Stores;
 using Extensive.Pipeline.CacheControl.Validators;
@@ -20,14 +21,25 @@ namespace Extensive.Pipeline.CacheControl
             [NotNull] this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            var baseValidator = new SuccessorValidator();
-            baseValidator
-                .SetNext(new IfNoneMatchValidator())
-                .SetNext(new IfModifiedSinceValidator());
 
-            services.TryAdd(ServiceDescriptor.Transient<IValidator>(sp => baseValidator));
+            services.AddTransient<DisableCacheControlHandler>();
+            services.AddTransient<PrivateCacheControlHandler>();
+            services.AddTransient<PublicCacheControlHandler>();
+            services.AddTransient<IfNoneMatchValidator>();
+            services.AddTransient<IfModifiedSinceValidator>();
+
             services.TryAdd(ServiceDescriptor.Transient<ICacheControlStore, CacheControlStore>());
             services.TryAdd(ServiceDescriptor.Transient<ICacheControlKeyProvider, MockCacheControlKeyProvider>());
+            services.TryAdd(ServiceDescriptor.Transient<IValidator>(sp =>
+                sp.GetRequiredService<IfNoneMatchValidator>()
+                    .SetNext(sp.GetRequiredService<IfModifiedSinceValidator>()))
+                );
+
+            services.TryAdd(ServiceDescriptor.Transient<IControlHandler>(sp =>
+                sp.GetRequiredService<DisableCacheControlHandler>()
+                    .SetNext(sp.GetRequiredService<PrivateCacheControlHandler>())
+                    .SetNext(sp.GetRequiredService<PublicCacheControlHandler>())
+                ));
 
             return services;
         }

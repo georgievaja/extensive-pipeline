@@ -9,5 +9,8 @@ namespace Extensive.Pipeline.CacheControl.Providers
     {
         [NotNull]
         CacheControlKey GetCacheControlKey();
+
+        [NotNull]
+        CacheControlKey GetCacheControlKey([ItemNotNull, NotNull] string[] varyHeaders);
     }
 }

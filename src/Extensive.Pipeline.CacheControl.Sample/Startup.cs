@@ -43,11 +43,10 @@ namespace Extensive.Pipeline.CacheControl.Sample
         public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             app.UseRouting();
-
             app.UseAuthorization();
             app.UseCacheControl(builder =>
             {
-                builder.WithSupportedMethods(new[] { HttpMethod.Get });
+                builder.WithSupportedMethods(new[] { HttpMethod.Get, HttpMethod.Head });
             });
 
             app.UseSwagger();

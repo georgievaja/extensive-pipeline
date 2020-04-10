@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl
 {
@@ -83,6 +85,40 @@ namespace Extensive.Pipeline.CacheControl
 
             var pathKey = path.ToUpperInvariant();
             this.key = $"{this.key}.P:{pathKey}";
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds vary headers
+        /// </summary>
+        /// <param name="headers">VARY headers</param>
+        public CacheControlKeyBuilder WithVaryHeaders(
+            [NotNull, ItemNotNull] string[] headers)
+        {
+            if (headers == null) throw new ArgumentNullException(nameof(headers));
+            if (headers.Length == 0)
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(headers));
+
+            var vhKey = string.Concat(headers, "|");
+            this.key = $"{this.key}.VH:{vhKey}";
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds query string values
+        /// </summary>
+        /// <param name="queryCollection">HTTP query string collection</param>
+        public CacheControlKeyBuilder WithQueryStrings(
+            [NotNull] IQueryCollection queryCollection)
+        {
+            if (queryCollection == null) throw new ArgumentNullException(nameof(queryCollection));
+
+            var qCKey = queryCollection
+                .Select(m => $"{m.Key}:{m.Value}");
+
+            this.key = $"{this.key}.QC:{string.Concat(qCKey, "|")}";
 
             return this;
         }

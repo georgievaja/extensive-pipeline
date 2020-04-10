@@ -23,6 +23,24 @@ namespace Extensive.Pipeline.CacheControl.Providers
                 .WithHost(accessor.HttpContext.Request.Host.Value)
                 .WithPathBase(accessor.HttpContext.Request.PathBase.Value)
                 .WithPath(accessor.HttpContext.Request.Path.Value)
+                .WithQueryStrings(accessor.HttpContext.Request.Query)
+                .Build();
+        }
+
+        public CacheControlKey GetCacheControlKey(string[] varyHeaders)
+        {
+            if (varyHeaders == null) throw new ArgumentNullException(nameof(varyHeaders));
+            if (varyHeaders.Length == 0)
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(varyHeaders));
+
+            return new CacheControlKeyBuilder()
+                .WithMethod(accessor.HttpContext.Request.Method)
+                .WithScheme(accessor.HttpContext.Request.Scheme)
+                .WithHost(accessor.HttpContext.Request.Host.Value)
+                .WithPathBase(accessor.HttpContext.Request.PathBase.Value)
+                .WithPath(accessor.HttpContext.Request.Path.Value)
+                .WithQueryStrings(accessor.HttpContext.Request.Query)
+                .WithVaryHeaders(varyHeaders)
                 .Build();
         }
     }
