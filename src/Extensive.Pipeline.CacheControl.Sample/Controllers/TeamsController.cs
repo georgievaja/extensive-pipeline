@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Extensive.Pipeline.CacheControl.Attributes;
 using Extensive.Pipeline.CacheControl.Pure.Enums;
 using Extensive.Pipeline.CacheControl.Sample.Mappers;
 using Extensive.Pipeline.CacheControl.Sample.Persistence;
@@ -17,7 +18,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/teams")]
-    [PublicCacheControl(RevalidationType.ProxyRevalidate, "additional-header")]
+    [DisableCacheControl]
     public class TeamsController : ControllerBase
     {
         private readonly ITeamsStore teamsStore;
