@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl.Validators
 {
-    public abstract class Validator : IValidator
+    internal abstract class Validator : IValidator
     {
         private IValidator nextValidator;
 

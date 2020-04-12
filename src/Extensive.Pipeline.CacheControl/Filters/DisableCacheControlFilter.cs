@@ -27,7 +27,7 @@ namespace Extensive.Pipeline.CacheControl.Filters
             context.HttpContext.TryGetSupportedMethod(cacheControl.SupportedMethods)
                 .SelectMany(_ => context.ActionDescriptor.TryGetAttribute<DisableCacheControlAttribute>())
                 .Execute(_ => context.HttpContext.Response.Headers.Add(
-                    HeaderNames.CacheControl, new string[]
+                    HeaderNames.CacheControl, new []
                         { "no-store" }));
 
             base.OnResultExecuting(context);

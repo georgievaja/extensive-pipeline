@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl.Providers
 {
-    public class DefaultCacheControlKeyProvider : ICacheControlKeyProvider
+    public sealed class DefaultCacheControlKeyProvider : ICacheControlKeyProvider
     {
         private readonly IHttpContextAccessor accessor;
         public DefaultCacheControlKeyProvider(

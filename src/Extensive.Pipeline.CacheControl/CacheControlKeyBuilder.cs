@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl
 {
-    public class CacheControlKeyBuilder
+    internal sealed class CacheControlKeyBuilder
     {
         private string key;
 

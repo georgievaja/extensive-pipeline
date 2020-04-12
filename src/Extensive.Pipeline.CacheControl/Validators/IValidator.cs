@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl.Validators
 {
-    public interface IValidator
+    internal interface IValidator
     {
         [NotNull]
         IValidator SetNext(

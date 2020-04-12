@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl.Providers
 {
-    public class MockCacheControlKeyProvider : ICacheControlKeyProvider
+    public sealed class MockCacheControlKeyProvider : ICacheControlKeyProvider
     {
         public CacheControlKey GetCacheControlKey()
         {

@@ -8,7 +8,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Extensive.Pipeline.CacheControl.Validators
 {
-    public class IfModifiedSinceValidator : Validator
+    internal sealed class IfModifiedSinceValidator : Validator
     {
         public override Maybe<IHeaderDictionary> TryValidate(
             IHeaderDictionary headers,

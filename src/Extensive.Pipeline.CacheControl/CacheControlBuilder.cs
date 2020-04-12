@@ -8,7 +8,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Extensive.Pipeline.CacheControl
 {
-    public class CacheControlBuilder
+    public sealed class CacheControlBuilder
     {
         private HttpMethod[] supportedMethods = {
             HttpMethod.Get, 

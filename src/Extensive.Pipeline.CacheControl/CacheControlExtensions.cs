@@ -32,12 +32,11 @@ namespace Extensive.Pipeline.CacheControl
             services.AddTransient<IfNoneMatchValidator>();
             services.AddTransient<IfModifiedSinceValidator>();
 
-            services.TryAdd(ServiceDescriptor.Transient<ICacheControlStore, CacheControlStore>());
-            services.TryAdd(ServiceDescriptor.Transient<ICacheControlKeyProvider, MockCacheControlKeyProvider>());
-            services.TryAdd(ServiceDescriptor.Transient<IValidator>(sp =>
+            services.AddTransient<ICacheControlStore, CacheControlStore>();
+            services.AddTransient<ICacheControlKeyProvider, MockCacheControlKeyProvider>();
+            services.AddTransient<IValidator>(sp =>
                 sp.GetRequiredService<IfNoneMatchValidator>()
-                    .SetNext(sp.GetRequiredService<IfModifiedSinceValidator>()))
-                );
+                    .SetNext(sp.GetRequiredService<IfModifiedSinceValidator>()));
 
             services.AddScoped<CacheControl>(p => cacheControlBuilder.Build());
             services.AddScoped<DisableCacheControlFilter>();

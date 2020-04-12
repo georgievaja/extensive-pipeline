@@ -6,7 +6,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Extensive.Pipeline.CacheControl.Validators
 {
-    public sealed class IfNoneMatchValidator : Validator
+    internal sealed class IfNoneMatchValidator : Validator
     {
         public Maybe<IHeaderDictionary> TryValidate(IHeaderDictionary headers, CacheControlResponse response)
         {

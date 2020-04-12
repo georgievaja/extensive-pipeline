@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace Extensive.Pipeline.CacheControl
 {
-    public class CacheControl
+    public sealed class CacheControl
     {
         public CacheControl(
             [NotNull, ItemNotNull] HttpMethod[] supportedMethods,
