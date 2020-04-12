@@ -15,7 +15,7 @@ namespace Extensive.Pipeline.CacheControl.Attributes
         /// <summary>
         /// Additional resource vary headers
         /// </summary>
-        public string[] AdditionalVaryHeaders { get; set; }
+        public string[] AdditionalVaryHeaders { get; set; } = new string[0];
 
         /// <summary>
         /// Maximum amount of time a resource will be considered fresh.
