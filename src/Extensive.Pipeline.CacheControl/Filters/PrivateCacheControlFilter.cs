@@ -25,6 +25,7 @@ namespace Extensive.Pipeline.CacheControl.Filters
     {
         private readonly CacheControl cacheControl;
         private readonly IValidator validator;
+        private readonly IValidatorsProvider validatorProvider;
 
         public PrivateCacheControlFilter(
             [NotNull] CacheControl cacheControl,
