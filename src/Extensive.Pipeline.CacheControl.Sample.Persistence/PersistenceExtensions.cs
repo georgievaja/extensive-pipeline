@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Persistence
@@ -9,7 +9,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Persistence
     public static class PersistenceExtensions
     {
         public static IServiceCollection AddStores(
-            [NotNull] this IServiceCollection services)
+            [DisallowNull] this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 

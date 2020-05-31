@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Extensive.Pipeline.CacheControl.Extensions;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
 using Extensive.Pipeline.CacheControl.Sample.Persistence.Models;
 using Extensive.Pipeline.CacheControl.Stores;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Persistence
 {
@@ -18,9 +20,9 @@ namespace Extensive.Pipeline.CacheControl.Sample.Persistence
         private readonly ICacheControlKeyProvider cacheControlKeyProvider;
 
         public TeamsVersioningDecorator(
-            [NotNull] ITeamsStore inner,
-            [NotNull] ICacheControlStore cacheControlStore,
-            [NotNull] ICacheControlKeyProvider cacheControlKeyProvider)
+            [DisallowNull] ITeamsStore inner,
+            [DisallowNull] ICacheControlStore cacheControlStore,
+            [DisallowNull] ICacheControlKeyProvider cacheControlKeyProvider)
         {
             this.inner = inner ?? throw new ArgumentNullException(nameof(inner));
             this.cacheControlStore = cacheControlStore ?? throw new ArgumentNullException(nameof(cacheControlStore));
@@ -62,7 +64,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Persistence
             return replaced;
         }
 
-        private Task SetCacheControlResponseAsync([NotNull] Team team)
+        private Task SetCacheControlResponseAsync([DisallowNull] Team team)
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
 
@@ -71,7 +73,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Persistence
 
             return cacheControlStore.SetCacheControlResponseAsync(
                 key, new CacheControlResponse(team.Updated,
-                    team.GetHashCode().ToString(),
+                    JsonSerializer.Serialize(team).Sha256(),
                     team.Updated));
         }
     }

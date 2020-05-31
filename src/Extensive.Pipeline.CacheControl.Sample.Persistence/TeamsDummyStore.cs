@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
 using Extensive.Pipeline.CacheControl.Sample.Persistence.Models;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Persistence

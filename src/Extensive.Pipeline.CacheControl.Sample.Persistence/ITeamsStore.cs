@@ -4,22 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Persistence
 {
     public interface ITeamsStore
     {
-        [NotNull]
+        [return: NotNull]
         Task<Maybe<Team>> TryGetTeamAsync(Guid id);
 
-        [NotNull]
+        [return: NotNull]
         Task<IEnumerable<Team>> GetTeamsAsync();
 
-        [NotNull]
-        Task<Maybe<Team>> TryReplaceTeamAsync(Guid id, [NotNull] Team team);
+        [return: NotNull]
+        Task<Maybe<Team>> TryReplaceTeamAsync(Guid id, [DisallowNull] Team team);
 
-        [NotNull]
-        Task<Team> CreateTeamAsync([NotNull] Team team);
+        [return: NotNull]
+        Task<Team> CreateTeamAsync([DisallowNull] Team team);
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl.Stores
 {
     public interface ICacheControlStore
     {
-        Task<Maybe<CacheControlResponse>> TryGetCacheControlResponseAsync([NotNull] CacheControlKey key);
-        Task SetCacheControlResponseAsync([NotNull] CacheControlKey key, [NotNull] CacheControlResponse response);
+        Task<Maybe<CacheControlResponse>> TryGetCacheControlResponseAsync([DisallowNull] CacheControlKey key);
+        Task SetCacheControlResponseAsync([DisallowNull] CacheControlKey key, [DisallowNull] CacheControlResponse response);
     }
 }

@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿using System.Diagnostics.CodeAnalysis;
 using System;
 
 namespace Extensive.Pipeline.CacheControl
 {
     public class CacheControlKey
     {
-        public CacheControlKey([NotNull] string key)
+        public CacheControlKey([DisallowNull] string key)
         {
             Key = key ?? throw new ArgumentNullException(nameof(key));
         }

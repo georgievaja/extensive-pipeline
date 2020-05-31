@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl.Providers
@@ -10,7 +10,7 @@ namespace Extensive.Pipeline.CacheControl.Providers
     {
         private readonly IHttpContextAccessor accessor;
         public DefaultCacheControlKeyProvider(
-            [NotNull] IHttpContextAccessor accessor)
+            [DisallowNull] IHttpContextAccessor accessor)
         {
             this.accessor = accessor ?? throw new ArgumentNullException(nameof(accessor));
         }

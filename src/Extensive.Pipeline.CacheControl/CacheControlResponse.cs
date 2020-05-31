@@ -4,7 +4,6 @@ namespace Extensive.Pipeline.CacheControl
 {
     public class CacheControlResponse
     {
-        public CacheControlResponse() { }
         public CacheControlResponse(
             DateTimeOffset created,
             string eTag,

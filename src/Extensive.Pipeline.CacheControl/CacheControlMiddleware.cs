@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Stores;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl
@@ -16,10 +16,10 @@ namespace Extensive.Pipeline.CacheControl
         private readonly CacheControl cacheControl;
 
         public CacheControlMiddleware(
-            [NotNull] RequestDelegate next,
-            [NotNull] ICacheControlStore cacheStore,
-            [NotNull] ICacheControlKeyProvider cacheControlKeyProvider,
-            [NotNull] CacheControl cacheControl)
+            [DisallowNull] RequestDelegate next,
+            [DisallowNull] ICacheControlStore cacheStore,
+            [DisallowNull] ICacheControlKeyProvider cacheControlKeyProvider,
+            [DisallowNull] CacheControl cacheControl)
         {
             this.cacheControl = cacheControl ?? throw new ArgumentNullException(nameof(cacheControl));
             this.next = next ?? throw new ArgumentNullException(nameof(next));

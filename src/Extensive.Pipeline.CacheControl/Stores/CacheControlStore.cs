@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Extensive.Pipeline.CacheControl.Stores
@@ -11,7 +11,7 @@ namespace Extensive.Pipeline.CacheControl.Stores
     {
         private readonly IDistributedCache distributedCache;
 
-        public CacheControlStore([NotNull] IDistributedCache distributedCache)
+        public CacheControlStore([DisallowNull] IDistributedCache distributedCache)
         {
             this.distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
         }

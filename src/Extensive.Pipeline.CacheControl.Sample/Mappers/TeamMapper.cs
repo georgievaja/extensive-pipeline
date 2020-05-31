@@ -4,15 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Sample.Persistence.Models;
 using Extensive.Pipeline.CacheControl.Sample.Resources;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Mappers
 {
     public static class TeamMapper
     {
-        [NotNull]
+        [return: NotNull]
         public static Team MapUpdatedToDto(
-            [NotNull] this TeamResourceV1 resource, 
+            [DisallowNull] this TeamResourceV1 resource, 
             DateTimeOffset lastModified)
         {
             if (resource == null) throw new ArgumentNullException(nameof(resource));
@@ -25,9 +25,9 @@ namespace Extensive.Pipeline.CacheControl.Sample.Mappers
             };
         }
 
-        [NotNull]
+        [return: NotNull]
         public static Team MapCreatedToDto(
-            [NotNull] this TeamRequestV1 request,
+            [DisallowNull] this TeamRequestV1 request,
             DateTimeOffset created,
             Guid id)
         {
@@ -42,8 +42,9 @@ namespace Extensive.Pipeline.CacheControl.Sample.Mappers
         }
 
 
-        [NotNull]
-        public static TeamResourceV1 MapFromDto([NotNull] this Team team)
+        [return: NotNull]
+        public static TeamResourceV1 MapFromDto(
+            [DisallowNull] this Team team)
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl
 {
@@ -16,8 +16,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds method key
         /// </summary>
         /// <param name="method">HTTP method</param>
+        [return: NotNull]
         public CacheControlKeyBuilder WithMethod(
-            [NotNull] string method)
+            [DisallowNull] string method)
         {
             if (method is null) throw new ArgumentNullException(nameof(method));
 
@@ -31,8 +32,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds scheme key
         /// </summary>
         /// <param name="m">HTTP scheme</param>
+        [return: NotNull]
         public CacheControlKeyBuilder WithScheme(
-            [NotNull] string scheme)
+            [DisallowNull] string scheme)
         {
             if (scheme is null) throw new ArgumentNullException(nameof(scheme));
 
@@ -46,8 +48,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds host key
         /// </summary>
         /// <param name="host">HTTP host</param>
+        [return: NotNull]
         public CacheControlKeyBuilder WithHost(
-            [NotNull] string host)
+            [DisallowNull] string host)
         {
             if (host is null) throw new ArgumentNullException(nameof(host));
 
@@ -61,8 +64,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds base path
         /// </summary>
         /// <param name="pathBase">HTTP base path</param>
+        [return: NotNull]
         public CacheControlKeyBuilder WithPathBase(
-            [NotNull] string pathBase)
+            [DisallowNull] string pathBase)
         {
             if (pathBase is null) throw new ArgumentNullException(nameof(pathBase));
 
@@ -76,8 +80,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds path
         /// </summary>
         /// <param name="path">HTTP base path</param>
+        [return: NotNull]
         public CacheControlKeyBuilder WithPath(
-            [NotNull] string path)
+            [DisallowNull] string path)
         {
             if (path is null) throw new ArgumentNullException(nameof(path));
 
@@ -87,6 +92,7 @@ namespace Extensive.Pipeline.CacheControl
             return this;
         }
 
+        [return: NotNull]
         public CacheControlKey Build()
         {
             return new CacheControlKey(this.key);

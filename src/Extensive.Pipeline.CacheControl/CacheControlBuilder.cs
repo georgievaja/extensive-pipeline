@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl
 {
@@ -13,8 +11,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds supported methods
         /// </summary>
         /// <param name="methods">HTTP methods</param>
+        [return: NotNull]
         public CacheControlBuilder WithSupportedMethods(
-            [NotNull, ItemNotNull] string[] methods)
+            [DisallowNull] string[] methods)
         {
             if (methods == null) throw new ArgumentNullException(nameof(methods));
             if (methods.Length == 0)
@@ -25,6 +24,7 @@ namespace Extensive.Pipeline.CacheControl
             return this;
         }
 
+        [return: NotNull]
         public CacheControl Build()
         {
             return new CacheControl(this.supportedMethods);

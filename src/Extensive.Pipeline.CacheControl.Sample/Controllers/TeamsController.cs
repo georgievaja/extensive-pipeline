@@ -6,7 +6,7 @@ using Extensive.Pipeline.CacheControl.Enums;
 using Extensive.Pipeline.CacheControl.Sample.Mappers;
 using Extensive.Pipeline.CacheControl.Sample.Persistence;
 using Extensive.Pipeline.CacheControl.Sample.Resources;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +20,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Controllers
     public class TeamsController : ControllerBase
     {
         private readonly ITeamsStore teamsStore;
-        public TeamsController([NotNull] ITeamsStore teamsStore)
+        public TeamsController([DisallowNull] ITeamsStore teamsStore)
         {
             this.teamsStore = teamsStore ?? throw new ArgumentNullException(nameof(teamsStore));
         }

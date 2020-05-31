@@ -1,12 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl.Providers
 {
     public interface IETagValidationProvider
     {
-        [Pure]
         bool IsValid(
-            [NotNull] NormalizedHeader[] eTags,
-            [NotNull] CacheControlResponse key);
+            [DisallowNull] NormalizedHeader[] eTags,
+            [DisallowNull] CacheControlResponse key);
     }
 }

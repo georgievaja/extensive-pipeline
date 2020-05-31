@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl.Providers
 {
     public interface ICacheControlKeyProvider
     {
-        [NotNull]
+        [return: NotNull]
         CacheControlKey GetCacheControlKey();
     }
 }

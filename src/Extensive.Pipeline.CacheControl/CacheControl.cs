@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl
 {
     public class CacheControl
     {
-        public CacheControl([NotNull] string[] supportedMethods)
+        public CacheControl([DisallowNull] string[] supportedMethods)
         {
             if (supportedMethods == null) throw new ArgumentNullException(nameof(supportedMethods));
             if (supportedMethods.Length == 0)
