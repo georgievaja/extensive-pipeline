@@ -8,6 +8,7 @@ namespace Extensive.Pipeline.CacheControl.Features
 {
     public interface ICacheControlFeature
     {
+        CacheControlKey ResourceKey { get; }
         bool ValidationSupported { get; }
         bool CacheControlSupported { get; }
         CacheContentValidators? Validators { get; }

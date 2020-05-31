@@ -33,7 +33,8 @@ namespace Extensive.Pipeline.CacheControl.Features.FeatureHandler
 
             if (directive is PrivateCacheControlAttribute attr)
             {
-                var validators = await base.TryGetCacheControlValidators(attr.AdditionalVaryHeaders);
+                var key = GetCacheControlKey(attr.AdditionalVaryHeaders);
+                var validators = await base.TryGetCacheControlValidators(key);
 
                 var headers = new Dictionary<string, StringValues>()
                 {
@@ -42,7 +43,7 @@ namespace Extensive.Pipeline.CacheControl.Features.FeatureHandler
                     { HeaderNames.Vary, base.GetVaryHeaders(attr.AdditionalVaryHeaders) }
                 };
 
-                return CacheControlFeature.CacheEnabled(validators, headers);
+                return CacheControlFeature.CacheEnabled(key, validators, headers);
             }
 
             return await base.GetCacheControlFeature(directive);

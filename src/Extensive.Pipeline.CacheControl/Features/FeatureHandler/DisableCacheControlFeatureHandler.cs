@@ -28,13 +28,15 @@ namespace Extensive.Pipeline.CacheControl.Features.FeatureHandler
 
             if (directive is DisableCacheControlAttribute _)
             {
+                var key = base.GetCacheControlKey();
+
                 var headers = new Dictionary<string, StringValues>() 
                 { 
                     { HeaderNames.CacheControl, new[] { "no-store" } 
                     } 
                 };
 
-                var feature = CacheControlFeature.CacheDisabled(headers);
+                var feature = CacheControlFeature.CacheDisabled(key, headers);
 
                 return Task.FromResult(feature);
             }

@@ -10,16 +10,20 @@ namespace Extensive.Pipeline.CacheControl.Features
 {
     public class CacheControlFeature : ICacheControlFeature
     {
-        private CacheControlFeature()
+        private CacheControlFeature(
+            CacheControlKey key)
         {
+            ResourceKey = key;
             CacheControlSupported = false;
             ValidationSupported = false;
             CacheControlResponseHeaders = new Dictionary<string, StringValues>();
         }
 
         private CacheControlFeature(
-            IDictionary<string, StringValues> headers)
+            IDictionary<string, StringValues> headers,
+            CacheControlKey key)
         {
+            ResourceKey = key;
             CacheControlSupported = true;
             ValidationSupported = false;
             CacheControlResponseHeaders = headers;
@@ -27,31 +31,63 @@ namespace Extensive.Pipeline.CacheControl.Features
 
         private CacheControlFeature(
             CacheContentValidators? validators, 
-            IDictionary<string, StringValues> headers)
+            IDictionary<string, StringValues> headers,
+            CacheControlKey key)
         {
+            ResourceKey = key;
             ValidationSupported = true;
             CacheControlSupported = true;
             CacheControlResponseHeaders = headers;
             Validators = validators;
         }
 
-        public static ICacheControlFeature CacheUnsupported()
+        internal static ICacheControlFeature CacheUnsupported(
+            [DisallowNull] CacheControlKey key)
         {
-            return new CacheControlFeature();
+            if (key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            return new CacheControlFeature(key);
         }
 
-        public static ICacheControlFeature CacheDisabled(
+        internal static ICacheControlFeature CacheDisabled(
+            [DisallowNull] CacheControlKey key,
             [DisallowNull] IDictionary<string, StringValues> headers)
         {
-            return new CacheControlFeature(headers);
+            if (key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            if (headers is null)
+            {
+                throw new ArgumentNullException(nameof(headers));
+            }
+
+            return new CacheControlFeature(headers, key);
         }
 
-        public static ICacheControlFeature CacheEnabled(
-            CacheContentValidators? validators,
+        internal static ICacheControlFeature CacheEnabled(
+            [DisallowNull] CacheControlKey key,
+            [AllowNull] CacheContentValidators? validators,
             [DisallowNull] IDictionary<string, StringValues> headers)
         {
-            return new CacheControlFeature(validators, headers);
+            if (key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            if (headers is null)
+            {
+                throw new ArgumentNullException(nameof(headers));
+            }
+
+            return new CacheControlFeature(validators, headers, key);
         }
+
+        public CacheControlKey ResourceKey { get; }
 
         public bool CacheControlSupported { get; }
 

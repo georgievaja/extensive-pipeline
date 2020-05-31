@@ -43,14 +43,22 @@ namespace Extensive.Pipeline.CacheControl.Features.FeatureHandler
         {
             if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
 
-            return nextValidator == null ? CacheControlFeature.CacheUnsupported() : await nextValidator.GetCacheControlFeature(descriptor);
+            return nextValidator == null ? CacheControlFeature.CacheUnsupported(GetCacheControlKey()) : await nextValidator.GetCacheControlFeature(descriptor);
         }
 
-        protected Task<CacheContentValidators?> TryGetCacheControlValidators(string[] additionalVaryHeaders)
+        protected CacheControlKey GetCacheControlKey(string[] additionalVaryHeaders)
         {
             var vary = GetVaryHeaders(additionalVaryHeaders);
-            var key = keyProvider.GetCacheControlKey(vary);
 
+            return keyProvider.GetCacheControlKey(vary);
+        }
+        protected CacheControlKey GetCacheControlKey()
+        {
+            return keyProvider.GetCacheControlKey();
+        }
+
+        protected Task<CacheContentValidators?> TryGetCacheControlValidators(CacheControlKey key)
+        {
             return cacheControlStore.TryGetCacheControlResponseAsync(key);
         }
 

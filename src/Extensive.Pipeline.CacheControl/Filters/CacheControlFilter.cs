@@ -22,16 +22,19 @@ namespace Extensive.Pipeline.CacheControl.Filters
         private readonly CacheControl cacheControl;
         private readonly ICacheControlFeatureHandler featureHandler;
         private readonly IValidator validator;
+        private readonly ICacheControlKeyProvider keyProvider;
 
         public CacheControlFilter(
             [DisallowNull] CacheControl cacheControl,
             [DisallowNull] ICacheControlFeatureHandler featureHandler,
-            [DisallowNull] IValidator validator
+            [DisallowNull] IValidator validator,
+            [DisallowNull]ICacheControlKeyProvider keyProvider
             )
         {
             this.cacheControl = cacheControl ?? throw new ArgumentNullException(nameof(cacheControl));
             this.featureHandler = featureHandler ?? throw new ArgumentNullException(nameof(featureHandler));
             this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
+            this.keyProvider = keyProvider ?? throw new ArgumentNullException(nameof(keyProvider));
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -39,7 +42,7 @@ namespace Extensive.Pipeline.CacheControl.Filters
             var feature = await context.HttpContext.TryGetSupportedMethod(cacheControl.SupportedMethods)
                 .SelectMany(_ => context.ActionDescriptor.TryGetAttribute<CacheControlAttribute>())
                 .MatchResultAsync(
-                    CacheControlFeature.CacheUnsupported(), 
+                    CacheControlFeature.CacheUnsupported(keyProvider.GetCacheControlKey()), 
                     async attr => await featureHandler.GetCacheControlFeature(attr));
 
 
