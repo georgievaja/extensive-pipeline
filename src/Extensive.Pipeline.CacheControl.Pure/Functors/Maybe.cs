@@ -120,11 +120,11 @@ namespace Extensive.Pipeline.CacheControl.Pure.Functors
         }
 
         public void Execute(
-            [NotNull] Action<T> just)
+            [DisallowNull] Action<T> just)
         {
             if (just == null) throw new ArgumentNullException(nameof(just));
 
-            if (HasItem)
+            if (Item != null)
             {
                 just.Invoke(Item);
             }

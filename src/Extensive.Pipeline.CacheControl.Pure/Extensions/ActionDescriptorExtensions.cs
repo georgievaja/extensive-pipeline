@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace Extensive.Pipeline.CacheControl.Pure.Extensions
@@ -11,7 +11,7 @@ namespace Extensive.Pipeline.CacheControl.Pure.Extensions
     public static class ActionDescriptorExtensions
     {
         public static Maybe<TAttribute> TryGetAttribute<TAttribute>(
-            [NotNull] this ActionDescriptor descriptor)
+            [DisallowNull] this ActionDescriptor descriptor)
             where TAttribute : Attribute
         {
             if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));

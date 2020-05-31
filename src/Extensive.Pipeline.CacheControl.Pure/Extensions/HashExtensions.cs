@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,15 +13,16 @@ namespace Extensive.Pipeline.CacheControl.Pure.Extensions
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>A hash</returns>
-        public static string Sha256(this string input)
+        [return: NotNull]
+        public static string Sha256(
+            [DisallowNull] this string input)
         {
-            using (var sha = SHA256.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(input);
-                var hash = sha.ComputeHash(bytes);
+            using var sha = SHA256.Create();
 
-                return Convert.ToBase64String(hash);
-            }
+            var bytes = Encoding.UTF8.GetBytes(input);
+            var hash = sha.ComputeHash(bytes);
+
+            return Convert.ToBase64String(hash);
         }
 
         /// <summary>
@@ -28,17 +30,13 @@ namespace Extensive.Pipeline.CacheControl.Pure.Extensions
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>A hash.</returns>
-        public static byte[] Sha256(this byte[] input)
+        [return: NotNull]
+        public static byte[] Sha256(
+            [DisallowNull] this byte[] input)
         {
-            if (input == null)
-            {
-                return null;
-            }
+            using var sha = SHA256.Create();
 
-            using (var sha = SHA256.Create())
-            {
-                return sha.ComputeHash(input);
-            }
+            return sha.ComputeHash(input);
         }
 
         /// <summary>
@@ -46,15 +44,16 @@ namespace Extensive.Pipeline.CacheControl.Pure.Extensions
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>A hash</returns>
-        public static string Sha512(this string input)
+        [return: NotNull]
+        public static string Sha512(
+            [DisallowNull] this string input)
         {
-            using (var sha = SHA512.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(input);
-                var hash = sha.ComputeHash(bytes);
+            using var sha = SHA512.Create();
 
-                return Convert.ToBase64String(hash);
-            }
+            var bytes = Encoding.UTF8.GetBytes(input);
+            var hash = sha.ComputeHash(bytes);
+
+            return Convert.ToBase64String(hash);
         }
     }
 }

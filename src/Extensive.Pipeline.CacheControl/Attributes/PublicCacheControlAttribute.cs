@@ -1,6 +1,6 @@
 ﻿using System;
 using Extensive.Pipeline.CacheControl.Pure.Enums;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Extensive.Pipeline.CacheControl.Attributes
 {

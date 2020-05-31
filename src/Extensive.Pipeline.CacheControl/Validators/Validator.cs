@@ -7,7 +7,7 @@ namespace Extensive.Pipeline.CacheControl.Validators
 {
     internal abstract class Validator : IValidator
     {
-        private IValidator nextValidator;
+        private IValidator? nextValidator;
 
         public IValidator SetNext(
             IValidator nextValidator)
@@ -24,7 +24,7 @@ namespace Extensive.Pipeline.CacheControl.Validators
             if (headers == null) throw new ArgumentNullException(nameof(headers));
             if (response == null) throw new ArgumentNullException(nameof(response));
 
-            return nextValidator.TryValidate(headers, response);
+            return nextValidator == null ? Maybe<IHeaderDictionary>.None : nextValidator.TryValidate(headers, response);
         }
     }
 }

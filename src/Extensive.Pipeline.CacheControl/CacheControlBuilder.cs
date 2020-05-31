@@ -43,7 +43,7 @@ namespace Extensive.Pipeline.CacheControl
         /// </summary>
         /// <param name="headers">HTTP headers</param>
         public CacheControlBuilder WithDefaultVaryHeaders(
-            [NotNull, ItemNotNull] string[] headers)
+            [DisallowNull] string[] headers)
         {
             if (headers == null) throw new ArgumentNullException(nameof(headers));
             if (headers.Length == 0)

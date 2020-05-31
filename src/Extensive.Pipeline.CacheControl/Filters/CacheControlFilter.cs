@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Pure.Extensions;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
 using Extensive.Pipeline.CacheControl.Stores;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Extensive.Pipeline.CacheControl.Filters
@@ -19,9 +17,9 @@ namespace Extensive.Pipeline.CacheControl.Filters
         private readonly ICacheControlStore cacheControlStore;
 
         protected CacheControlFilter(
-            [NotNull] CacheControl cacheControl,
-            [NotNull] ICacheControlKeyProvider keyProvider,
-            [NotNull] ICacheControlStore cacheControlStore)
+            [DisallowNull] CacheControl cacheControl,
+            [DisallowNull] ICacheControlKeyProvider keyProvider,
+            [DisallowNull] ICacheControlStore cacheControlStore)
         {
             this.cacheControl = cacheControl ?? throw new ArgumentNullException(nameof(cacheControl));
             this.keyProvider = keyProvider ?? throw new ArgumentNullException(nameof(keyProvider));

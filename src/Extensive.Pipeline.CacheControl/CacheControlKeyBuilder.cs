@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl
@@ -98,8 +99,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds vary headers
         /// </summary>
         /// <param name="headers">VARY headers</param>
+        [return: NotNull]
         public CacheControlKeyBuilder WithVaryHeaders(
-            [NotNull, ItemNotNull] string[] headers)
+            [DisallowNull] string[] headers)
         {
             if (headers == null) throw new ArgumentNullException(nameof(headers));
             if (headers.Length == 0)
@@ -115,8 +117,9 @@ namespace Extensive.Pipeline.CacheControl
         /// Adds query string values
         /// </summary>
         /// <param name="queryCollection">HTTP query string collection</param>
+        [return: NotNull]
         public CacheControlKeyBuilder WithQueryStrings(
-            [NotNull] IQueryCollection queryCollection)
+            [DisallowNull] IQueryCollection queryCollection)
         {
             if (queryCollection == null) throw new ArgumentNullException(nameof(queryCollection));
 
@@ -128,6 +131,7 @@ namespace Extensive.Pipeline.CacheControl
             return this;
         }
 
+        [return: NotNull]
         public CacheControlKey Build()
         {
             return new CacheControlKey(this.key);

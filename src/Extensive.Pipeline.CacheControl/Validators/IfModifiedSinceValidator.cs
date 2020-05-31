@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 

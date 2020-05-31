@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,8 +21,8 @@ namespace Extensive.Pipeline.CacheControl
         /// <param name="configureCacheControl"></param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddCacheControl(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Action<CacheControlBuilder> configureCacheControl)
+            [DisallowNull] this IServiceCollection services,
+            [DisallowNull] Action<CacheControlBuilder> configureCacheControl)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             if (configureCacheControl == null) throw new ArgumentNullException(nameof(configureCacheControl));
@@ -47,7 +47,7 @@ namespace Extensive.Pipeline.CacheControl
         }
 
         public static void AddCacheControlFilters(
-            [NotNull] this FilterCollection filters)
+            [DisallowNull] this FilterCollection filters)
         {
             if (filters == null) throw new ArgumentNullException(nameof(filters));
             if (filters.Count == 0)

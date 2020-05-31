@@ -8,7 +8,7 @@ using Extensive.Pipeline.CacheControl.Pure.Enums;
 using Extensive.Pipeline.CacheControl.Pure.Extensions;
 using Extensive.Pipeline.CacheControl.Stores;
 using Extensive.Pipeline.CacheControl.Validators;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -28,14 +28,16 @@ namespace Extensive.Pipeline.CacheControl.Filters
         private readonly IValidatorsProvider validatorProvider;
 
         public PrivateCacheControlFilter(
-            [NotNull] CacheControl cacheControl,
-            [NotNull] ICacheControlKeyProvider keyProvider,
-            [NotNull] ICacheControlStore cacheControlStore,
+            [DisallowNull] CacheControl cacheControl,
+            [DisallowNull] ICacheControlKeyProvider keyProvider,
+            [DisallowNull] ICacheControlStore cacheControlStore,
+            [DisallowNull] IValidatorsProvider validatorProvider,
             IValidator validator)
             : base(cacheControl, keyProvider, cacheControlStore)
         {
             this.cacheControl = cacheControl ?? throw new ArgumentNullException(nameof(cacheControl));
             this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
+            this.validatorProvider = validatorProvider  ?? throw new ArgumentNullException(nameof(validatorProvider));
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

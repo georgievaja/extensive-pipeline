@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 
 namespace Extensive.Pipeline.CacheControl.Validators
 {
     internal interface IValidator
     {
-        [NotNull]
+        [return: NotNull]
         IValidator SetNext(
-            [NotNull] IValidator handler);
+            [DisallowNull] IValidator handler);
 
-        [Pure]
+        [return: NotNull]
         Maybe<IHeaderDictionary> TryValidate(
-            [NotNull] IHeaderDictionary headers,
-            [NotNull] CacheControlResponse response);
+            [DisallowNull] IHeaderDictionary headers,
+            [DisallowNull] CacheControlResponse response);
     }
 }

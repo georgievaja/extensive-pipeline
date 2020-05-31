@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using Extensive.Pipeline.CacheControl.Attributes;
 using Extensive.Pipeline.CacheControl.Pure.Extensions;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Net.Http.Headers;
 
@@ -17,7 +17,7 @@ namespace Extensive.Pipeline.CacheControl.Filters
         private readonly CacheControl cacheControl;
 
         public DisableCacheControlFilter(
-            [NotNull] CacheControl cacheControl)
+            [DisallowNull] CacheControl cacheControl)
         {
             this.cacheControl = cacheControl ?? throw new ArgumentNullException(nameof(cacheControl));
         }

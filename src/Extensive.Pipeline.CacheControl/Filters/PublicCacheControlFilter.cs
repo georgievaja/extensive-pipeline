@@ -1,7 +1,7 @@
 ﻿using System;
 using Extensive.Pipeline.CacheControl.Attributes;
 using Extensive.Pipeline.CacheControl.Pure.Enums;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Extensive.Pipeline.CacheControl.Filters
@@ -12,7 +12,7 @@ namespace Extensive.Pipeline.CacheControl.Filters
         private readonly CacheControl cacheControl;
 
         public PublicCacheControlFilter(
-            [NotNull] CacheControl cacheControl)
+            [DisallowNull] CacheControl cacheControl)
         {
             this.cacheControl = cacheControl ?? throw new ArgumentNullException(nameof(cacheControl));
         }
