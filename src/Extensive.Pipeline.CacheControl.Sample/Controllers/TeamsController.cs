@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Extensive.Pipeline.CacheControl.Enums;
+using Extensive.Pipeline.CacheControl.Attributes;
+using Extensive.Pipeline.CacheControl.Pure.Enums;
 using Extensive.Pipeline.CacheControl.Sample.Mappers;
 using Extensive.Pipeline.CacheControl.Sample.Persistence;
 using Extensive.Pipeline.CacheControl.Sample.Resources;
@@ -10,13 +11,14 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 
 namespace Extensive.Pipeline.CacheControl.Sample.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/teams")]
-    [CacheControl(CacheabilityType = CacheabilityType.Public)]
+    [PrivateCacheControl(MaxAge = 10, AdditionalVaryHeaders = new []{ "personal-number" })]
     public class TeamsController : ControllerBase
     {
         private readonly ITeamsStore teamsStore;
@@ -27,7 +29,8 @@ namespace Extensive.Pipeline.CacheControl.Sample.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<TeamResourceV1>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(
+            [FromHeader(Name = "personal-number")]string personalNumber)
         {
             var result = await teamsStore.GetTeamsAsync();
             var resource = result.Select(TeamMapper.MapFromDto);

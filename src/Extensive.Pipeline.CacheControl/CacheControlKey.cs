@@ -3,7 +3,7 @@ using System;
 
 namespace Extensive.Pipeline.CacheControl
 {
-    public class CacheControlKey
+    public sealed class CacheControlKey
     {
         public CacheControlKey([DisallowNull] string key)
         {

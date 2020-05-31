@@ -119,6 +119,17 @@ namespace Extensive.Pipeline.CacheControl.Pure.Functors
             return () => func(arg);
         }
 
+        public void Execute(
+            [NotNull] Action<T> just)
+        {
+            if (just == null) throw new ArgumentNullException(nameof(just));
+
+            if (HasItem)
+            {
+                just.Invoke(Item);
+            }
+        }
+
         public void Match(
             [DisallowNull] Action<T> just,
             [DisallowNull] Action nothing)

@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Net.Http;
+using Extensive.Pipeline.CacheControl.Filters;
 
 namespace Extensive.Pipeline.CacheControl.Sample
 {
@@ -21,8 +23,15 @@ namespace Extensive.Pipeline.CacheControl.Sample
         {
             services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
-            services.AddCacheControl();
-            services.AddControllers();
+            services.AddCacheControl(builder =>
+                {
+                    builder.WithSupportedMethods(new HttpMethod[] {HttpMethod.Get, HttpMethod.Head});
+                });
+
+            services.AddControllers(builder =>
+                builder.Filters.AddCacheControlFilters()
+                );
+
             services.AddApiVersioning(options =>
             {
                 // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
@@ -42,13 +51,7 @@ namespace Extensive.Pipeline.CacheControl.Sample
         public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             app.UseRouting();
-
             app.UseAuthorization();
-            app.UseCacheControl(builder =>
-            {
-                builder.WithSupportedMethods(new[] { "GET" });
-            });
-
             app.UseSwagger();
             app.UseSwaggerUI(
                 options =>

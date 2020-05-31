@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Extensive.Pipeline.CacheControl.Stores
@@ -10,9 +11,13 @@ namespace Extensive.Pipeline.CacheControl.Stores
     public sealed class CacheControlStore : ICacheControlStore
     {
         private readonly IDistributedCache distributedCache;
+        private readonly IHttpContextAccessor accessor;
 
-        public CacheControlStore([DisallowNull] IDistributedCache distributedCache)
+        public CacheControlStore(
+            [DisallowNull] IDistributedCache distributedCache,
+            [DisallowNull] IHttpContextAccessor accessor)
         {
+            this.accessor = accessor ?? throw new ArgumentNullException(nameof(accessor));
             this.distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
         }
 
