@@ -6,7 +6,7 @@ namespace Extensive.Pipeline.CacheControl.Stores
 {
     public interface ICacheControlStore
     {
-        Task<Maybe<CacheControlResponse>> TryGetCacheControlResponseAsync([DisallowNull] CacheControlKey key);
-        Task SetCacheControlResponseAsync([DisallowNull] CacheControlKey key, [DisallowNull] CacheControlResponse response);
+        Task<CacheContentValidators?> TryGetCacheControlResponseAsync([DisallowNull] CacheControlKey key);
+        Task SetCacheControlResponseAsync([DisallowNull] CacheControlKey key, [DisallowNull] CacheContentValidators response);
     }
 }

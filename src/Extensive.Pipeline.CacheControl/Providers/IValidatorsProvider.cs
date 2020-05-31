@@ -6,6 +6,6 @@ namespace Extensive.Pipeline.CacheControl.Providers
 {
     public interface IValidatorsProvider
     {
-        CacheControlResponse GenerateCacheControlResponse(string content);
+        CacheContentValidators GenerateCacheControlResponse(string content);
     }
 }

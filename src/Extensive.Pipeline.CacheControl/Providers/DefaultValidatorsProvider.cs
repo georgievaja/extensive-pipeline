@@ -8,12 +8,12 @@ namespace Extensive.Pipeline.CacheControl.Providers
 {
     public class DefaultValidatorsProvider : IValidatorsProvider
     {
-        public CacheControlResponse GenerateCacheControlResponse(string content)
+        public CacheContentValidators GenerateCacheControlResponse(string content)
         {
             var etag = content.Sha256();
             var modified = DateTimeOffset.UtcNow;
 
-            return new CacheControlResponse(etag, modified);
+            return new CacheContentValidators(etag, modified);
         }
     }
 }

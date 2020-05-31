@@ -12,7 +12,7 @@ namespace Extensive.Pipeline.CacheControl.Validators
     {
         public override Maybe<IHeaderDictionary> TryValidate(
             IHeaderDictionary headers,
-            CacheControlResponse response)
+            CacheContentValidators response)
         {
             if (headers == null) throw new ArgumentNullException(nameof(headers));
             if (response == null) throw new ArgumentNullException(nameof(response));

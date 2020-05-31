@@ -8,7 +8,7 @@ namespace Extensive.Pipeline.CacheControl.Validators
 {
     internal sealed class IfNoneMatchValidator : Validator
     {
-        public override Maybe<IHeaderDictionary> TryValidate(IHeaderDictionary headers, CacheControlResponse response)
+        public override Maybe<IHeaderDictionary> TryValidate(IHeaderDictionary headers, CacheContentValidators response)
         {
             if (headers == null) throw new ArgumentNullException(nameof(headers));
             if (response == null) throw new ArgumentNullException(nameof(response));

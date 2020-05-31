@@ -25,5 +25,8 @@ namespace Extensive.Pipeline.CacheControl.Pure.Extensions
 
             return supportedMethod != null ? Maybe<HttpMethod>.Some(supportedMethod) : Maybe<HttpMethod>.None;
         }
+
+        public static bool IsSuccessStatusCode(this int? statusCode)
+           => statusCode == null ? false : statusCode >= 200 && statusCode < 300;
     }
 }

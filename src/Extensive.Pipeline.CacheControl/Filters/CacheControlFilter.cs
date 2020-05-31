@@ -2,41 +2,77 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Extensive.Pipeline.CacheControl.Attributes;
+using Extensive.Pipeline.CacheControl.Features;
+using Extensive.Pipeline.CacheControl.Features.FeatureHandler;
 using Extensive.Pipeline.CacheControl.Providers;
 using Extensive.Pipeline.CacheControl.Pure.Extensions;
 using Extensive.Pipeline.CacheControl.Pure.Functors;
 using Extensive.Pipeline.CacheControl.Stores;
+using Extensive.Pipeline.CacheControl.Validators;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Extensive.Pipeline.CacheControl.Filters
 {
-    internal abstract class CacheControlFilter: ActionFilterAttribute
+    internal class CacheControlFilter: ActionFilterAttribute
     {
         private readonly CacheControl cacheControl;
-        private readonly ICacheControlKeyProvider keyProvider;
-        private readonly ICacheControlStore cacheControlStore;
+        private readonly ICacheControlFeatureHandler featureHandler;
+        private readonly IValidator validator;
 
-        protected CacheControlFilter(
+        public CacheControlFilter(
             [DisallowNull] CacheControl cacheControl,
-            [DisallowNull] ICacheControlKeyProvider keyProvider,
-            [DisallowNull] ICacheControlStore cacheControlStore)
+            [DisallowNull] ICacheControlFeatureHandler featureHandler,
+            [DisallowNull] IValidator validator
+            )
         {
             this.cacheControl = cacheControl ?? throw new ArgumentNullException(nameof(cacheControl));
-            this.keyProvider = keyProvider ?? throw new ArgumentNullException(nameof(keyProvider));
-            this.cacheControlStore = cacheControlStore ?? throw new ArgumentNullException(nameof(cacheControlStore));
+            this.featureHandler = featureHandler ?? throw new ArgumentNullException(nameof(featureHandler));
+            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
-        protected Task<Maybe<CacheControlResponse>> TryGetCacheControlValidators(string[] additionalVaryHeaders)
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var vary = GetVaryHeaders(additionalVaryHeaders);
-            var key = keyProvider.GetCacheControlKey(vary);
+            var feature = await context.HttpContext.TryGetSupportedMethod(cacheControl.SupportedMethods)
+                .SelectMany(_ => context.ActionDescriptor.TryGetAttribute<CacheControlAttribute>())
+                .MatchResultAsync(
+                    CacheControlFeature.CacheUnsupported(), 
+                    async attr => await featureHandler.GetCacheControlFeature(attr));
 
-            return cacheControlStore.TryGetCacheControlResponseAsync(key);
+
+            context.HttpContext.Features.Set<ICacheControlFeature>(feature);
+            var cacheIsValid = feature.Validators == null ? Maybe<IHeaderDictionary>.None: validator.TryValidate(context.HttpContext.Request.Headers, feature.Validators);
+
+            await cacheIsValid.MatchAsync(
+                result =>
+                {
+                    context.Result = new StatusCodeResult(StatusCodes.Status304NotModified);
+                    return context.Result.ExecuteResultAsync(context);
+                }, () => base.OnActionExecutionAsync(context, next));
         }
 
-        protected string[] GetVaryHeaders(string[] additionalVaryHeaders)
+        public override Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
-            return cacheControl.DefaultVaryHeaders.DistinctConcat(additionalVaryHeaders).ToArray();
+            var feature = context.HttpContext.Features.Get<ICacheControlFeature>();
+
+            if (context.Result is ObjectResult objectResult)
+            {
+                if (objectResult.StatusCode.IsSuccessStatusCode() && feature.CacheControlSupported)
+                {
+                    context.HttpContext.Response.Headers.AddRange(feature.CacheControlResponseHeaders);
+
+                    if (feature.ValidationSupported && feature.Validators != null)
+                    {
+                        var headers = feature.Validators.GetHeaders();
+                        context.HttpContext.Response.Headers.AddRange(headers);
+                    }
+                }
+            }
+
+            return base.OnResultExecutionAsync(context, next);
         }
     }
 }

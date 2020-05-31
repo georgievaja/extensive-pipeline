@@ -6,9 +6,9 @@ using Microsoft.Net.Http.Headers;
 
 namespace Extensive.Pipeline.CacheControl
 {
-    public class CacheControlResponse
+    public class CacheContentValidators
     {
-        public CacheControlResponse(
+        public CacheContentValidators(
             string eTag,
             DateTimeOffset lastModified)
         {

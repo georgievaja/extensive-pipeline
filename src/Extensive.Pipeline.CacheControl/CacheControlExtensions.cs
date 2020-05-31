@@ -9,6 +9,7 @@ using Extensive.Pipeline.CacheControl.Stores;
 using Extensive.Pipeline.CacheControl.Validators;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Extensive.Pipeline.CacheControl.Features.FeatureHandler;
 
 namespace Extensive.Pipeline.CacheControl
 {
@@ -32,16 +33,39 @@ namespace Extensive.Pipeline.CacheControl
             services.AddTransient<IfNoneMatchValidator>();
             services.AddTransient<IfModifiedSinceValidator>();
 
+            services.AddTransient<DisableCacheControlFeatureHandler>();
+            services.AddTransient<PrivateCacheControlFeatureHandler>();
+            services.AddTransient<PublicCacheControlFeatureHandler>();
+
             services.AddTransient<ICacheControlStore, CacheControlStore>();
             services.AddTransient<ICacheControlKeyProvider, MockCacheControlKeyProvider>();
+            services.AddTransient<IValidatorsProvider, DefaultValidatorsProvider>();
             services.AddTransient<IValidator>(sp =>
-                sp.GetRequiredService<IfNoneMatchValidator>()
-                    .SetNext(sp.GetRequiredService<IfModifiedSinceValidator>()));
+            {
+                var etagValidator = sp.GetRequiredService<IfNoneMatchValidator>();
+                var modifiedSinceValidator = sp.GetRequiredService<IfModifiedSinceValidator>();
+
+                etagValidator
+                .SetNext(modifiedSinceValidator);
+
+                return etagValidator;
+            });
+
+            services.AddTransient<ICacheControlFeatureHandler>(sp =>
+            {
+                var diabled = sp.GetRequiredService<DisableCacheControlFeatureHandler>();
+                var privateh = sp.GetRequiredService<PrivateCacheControlFeatureHandler>();
+                var publich = sp.GetRequiredService<PublicCacheControlFeatureHandler>();
+
+                diabled
+                    .SetNext(privateh)
+                    .SetNext(publich);
+
+                return diabled;
+            });
 
             services.AddScoped<CacheControl>(p => cacheControlBuilder.Build());
-            services.AddScoped<DisableCacheControlFilter>();
-            services.AddScoped<PrivateCacheControlFilter>();
-            services.AddScoped<PublicCacheControlFilter>();
+            services.AddScoped<CacheControlFilter>();
 
             return services;
         }
@@ -53,9 +77,7 @@ namespace Extensive.Pipeline.CacheControl
             if (filters.Count == 0)
                 throw new ArgumentException("Value cannot be an empty collection.", nameof(filters));
 
-            filters.Add<DisableCacheControlFilter>();
-            filters.Add<PrivateCacheControlFilter>();
-            filters.Add<PublicCacheControlFilter>();
+            filters.Add<CacheControlFilter>();
         }
     }
 }

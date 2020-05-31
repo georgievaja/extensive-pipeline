@@ -18,7 +18,6 @@ namespace Extensive.Pipeline.CacheControl.Sample.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/teams")]
-    [PrivateCacheControl(MaxAge = 10, AdditionalVaryHeaders = new []{ "personal-number" })]
     public class TeamsController : ControllerBase
     {
         private readonly ITeamsStore teamsStore;
@@ -28,6 +27,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Controllers
         }
 
         [HttpGet]
+        [PrivateCacheControl(MaxAge = 10, AdditionalVaryHeaders = new[] { "personal-number" })]
         [ProducesResponseType(typeof(IEnumerable<TeamResourceV1>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(
             [FromHeader(Name = "personal-number")]string personalNumber)
@@ -58,6 +58,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Controllers
         }
 
         [HttpGet("{id}", Name = nameof(GetOne))]
+        [DisableCacheControl]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(TeamResourceV1), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOne(

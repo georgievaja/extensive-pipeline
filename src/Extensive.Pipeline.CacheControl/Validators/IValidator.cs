@@ -14,6 +14,6 @@ namespace Extensive.Pipeline.CacheControl.Validators
         [return: NotNull]
         Maybe<IHeaderDictionary> TryValidate(
             [DisallowNull] IHeaderDictionary headers,
-            [DisallowNull] CacheControlResponse response);
+            [DisallowNull] CacheContentValidators response);
     }
 }

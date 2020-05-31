@@ -9,7 +9,7 @@ namespace Extensive.Pipeline.CacheControl.Attributes
     /// <summary>
     /// Sets no-store for resources
     /// </summary>
-    public class DisableCacheControlAttribute : ActionFilterAttribute
+    public class DisableCacheControlAttribute : CacheControlAttribute
     {
     }
 }

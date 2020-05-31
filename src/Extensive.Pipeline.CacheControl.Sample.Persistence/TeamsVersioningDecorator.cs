@@ -72,7 +72,7 @@ namespace Extensive.Pipeline.CacheControl.Sample.Persistence
             var key = cacheControlKeyProvider.GetCacheControlKey();
 
             return cacheControlStore.SetCacheControlResponseAsync(
-                key, new CacheControlResponse(
+                key, new CacheContentValidators(
                     team.GetHashCode().ToString(),
                     team.Updated));
         }

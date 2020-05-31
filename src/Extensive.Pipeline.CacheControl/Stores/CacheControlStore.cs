@@ -21,7 +21,7 @@ namespace Extensive.Pipeline.CacheControl.Stores
             this.distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
         }
 
-        public async Task<Maybe<CacheControlResponse>> TryGetCacheControlResponseAsync(
+        public async Task<CacheContentValidators?> TryGetCacheControlResponseAsync(
             CacheControlKey key)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
@@ -29,14 +29,14 @@ namespace Extensive.Pipeline.CacheControl.Stores
             var result = await distributedCache.GetStringAsync(key.Key);
             
             return result == null ? 
-                Maybe<CacheControlResponse>.None : 
-                Maybe<CacheControlResponse>.Some(JsonSerializer.Deserialize<CacheControlResponse>(result));
+                null : 
+                JsonSerializer.Deserialize<CacheContentValidators>(result);
         }
 
         //TODO: this can probably be called from decorator on infrastructure layer
         public Task SetCacheControlResponseAsync(
             CacheControlKey key, 
-            CacheControlResponse response)
+            CacheContentValidators response)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
             if (response == null) throw new ArgumentNullException(nameof(response));
